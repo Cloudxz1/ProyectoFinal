@@ -10,6 +10,6 @@ import cl.icap.proyectofinal.m5.entity.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, String> {
 
-	Usuario findByNombreusuario(String nombreusuario);
+
 
 }

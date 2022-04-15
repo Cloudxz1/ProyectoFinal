@@ -94,11 +94,11 @@ public class AppController {
 		return "redirect:/EstadosSistemaCRUD";
 	}
 	
-	@RequestMapping("/UsuariosCRUD")
+	@RequestMapping("/UsuarioCRUD")
 	public String defectDetails5(Model model3) {
 		List<Usuario> listUsuarios= usuariosservice.listAll();
 		model3.addAttribute("listUsuarios", listUsuarios);
-		return "UsuariosCRUD";
+		return "UsuarioCRUD";
 	}
 	
 	@RequestMapping("/newUsuario")
@@ -114,7 +114,7 @@ public class AppController {
 	public String saveProduct1(@ModelAttribute("usuarios") Usuario usuarios) {
 		usuariosservice.save(usuarios);
 
-		return "redirect:/UsuariosCRUD";
+		return "redirect:/UsuarioCRUD";
 	}
 	
 	@RequestMapping("/editUsuario/{IdUsuario}")
@@ -129,7 +129,7 @@ public class AppController {
 	@RequestMapping("/deleteUsuario/{IdUsuario}")
 	public String deleteProduct1(@PathVariable(name = "IdUsuario") String idUsuario) {
 		usuariosservice.delete(idUsuario);
-		return "redirect:/UsuariosCRUD";
+		return "redirect:/UsuarioCRUD";
 	}
 	
 	

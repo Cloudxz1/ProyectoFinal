@@ -6,9 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@Table(name="usuarios")
 public class Usuario {
 	
 	@Id 
+	
 	@Column(name="IDUSUARIO")
 	private String IdUsuario;
 	private String Idrol;
