@@ -6,16 +6,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@Table(name="ticket")
 public class Ticket {
 	
 	@Id 
-	@GeneratedValue @Column(name="idTicket")
+	@Column(name="idticket")
 	private String idTicket;
+	@Column(name="idestado")
 	private String idEstado;
+	@Column(name="idusuario")
 	private String idUsuario;
+	@Column(name="fechacreacion")
 	private String fechaCreacion;
+	@Column(name="fechatermino")
 	private String fechaTermino;
+	@Column(name="tituloticket")
 	private String tituloTicket;
+	@Column(name="idusuarioasignado")
 	private String idUsuarioAsignado;
 	
 	
