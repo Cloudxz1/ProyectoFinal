@@ -49,7 +49,7 @@ function actualizar(){
 				}
 			}			
 		}
-	});
+	})
 }
 
 function insertar(){
@@ -71,4 +71,5 @@ function insertar(){
 		}
 	});
 }
+
 

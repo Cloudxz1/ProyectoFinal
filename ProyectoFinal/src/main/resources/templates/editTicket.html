@@ -3,9 +3,10 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="./js/funciones.js"></script>
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/bootstrap.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -15,12 +16,12 @@
 	rel='stylesheet'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload="myFunction()">
+<body onload="myFunction2()">
 	<nav>
 		<div class="navbar">
 			<i class='bx bx-menu'></i>
 			<div class="logo">
-				<a href="#">Crear Ticket - Usuario:
+				<a href="#">Mis tickets -Resolver-
 					[[${#httpServletRequest.remoteUser}]]</a>
 			</div>
 			<div class="nav-links">
@@ -33,7 +34,7 @@
 						class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
 						<ul class="htmlCss-sub-menu sub-menu">
 							<li><a th:href="@{mistickets}">Mis tickets</a></li>
-							<li><a href="#">Crear </a></li>
+							<li><a th:href="@{creaticket}">Crear</a></li>
 						</ul></li>
 					<li><a href="#">Administración</a> <i
 						class='bx bxs-chevron-down js-arrow arrow '></i>
@@ -55,85 +56,88 @@
 		</div>
 	</nav>
 
+
 	<br>
+	<br>
+	<br>
+	<br>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<title>Editar Ticket</title>
+</head>
+<body onload="myFunction2()">
 	<div align="center">
 		<form action="#" th:action="@{/saveTicket}" method="GET">
 			<table border="0" cellpadding="10">
 				<tr>
 					<td># Ticket (Auto):</td>
-					<td><input type="text" th:field="*{ticket.idTicket}" th:id="FK2" th:readonly="true" /></td>
-					<br>
-					<br>
+					<td><input type="text" th:field="*{ticket.idTicket}"
+						th:id="FK2" th:readonly="true" /></td>
 					<td>Estado:</td>
-					<td><select th:field="*{ticket.Estado}"><option 
-								th:value="'1'" th:text="Asignado" th:readonly="true"></option></select></td>
+					<td><select th:field="*{ticket.Estado}">
+							<option th:value="'1'" th:text="Asignado" th:readonly="true"></option>
+							<option th:value="'2'" th:text="Cerrado" th:readonly="true"></option>
+					</select></td>
 					<td>Fecha Creacion:</td>
 					<td><input type="text" th:field="*{ticket.fechaCreacion}"
 						th:id="fechaini" th:readonly="true" /></td>
-					<td>Fecha Termino :</td>
+					<td>Fecha Termino:</td>
 					<td><input type="text" th:field="*{ticket.fechaTermino}"
 						th:id="fechater" th:readonly="true" /></td>
 				</tr>
 				<tr>
-					<td># Usuario Creador:</td>
-					<td><select th:field="*{ticket.idUsuario}">
-					<option th:value="'1'" th:text="Admin" th:readonly="true"></option>
-					</select></td>
-					<td>Titulo Ticket:</td>
-					<td><input type="text" th:field="*{ticket.tituloTicket}" required /></td>
-					<br>
 					<td>Asignar a:</td>
 					<td><select th:field="*{ticket.Usuario}">
-					<option th:value="'1'" th:text="Admin" th:readonly="true"></option>
-					<option th:value="'2'" th:text="QA" th:readonly="true"></option>
-					<option th:value="'3'" th:text="PMO" th:readonly="true"></option>
+							<option th:value="'1'" th:text="Admin" th:readonly="true"></option>
+							<option th:value="'2'" th:text="QA" th:readonly="true"></option>
+							<option th:value="'3'" th:text="PMO" th:readonly="true"></option>
 					</select></td>
-					<th:utext>		
-					<th:utext>		
-					<td>Detalle Ticket:</td>
-					<td><textarea rows="3" th:field="*{historicoTicket.mensajeHistorico}" required /></textarea></td>
-					<td><input type="hidden" th:field="*{historicoTicket.idHistorico}" th:readonly="true" /></td>
-					<td><input type="hidden" th:field="*{historicoTicket.idTicketFK}" th:id="FK"  /></td>
-					
+					<td>Titulo Ticket:</td>
+					<td><input type="text" th:field="*{ticket.tituloTicket}"
+						required /></td>
+
+					<td><input type="hidden" th:field="*{ticket.idUsuario}" /></td>
+
 				</tr>
 			</table>
-			<button type="submit" onclick="javascript:alert('Creado');">Crear</button> 
+			<button type="submit" onclick="javascript:alert('Editado');">Crear</button>
+			<button th:action="@{/mistickets}" type="submit">Volver</button>
 
-			<button th:action="@{/home}"  type="submit">Volver</button> 
+			<h1 align="left">Comentarios Ticket</h1>
 			
+				<a th:href="@{/newHistorico}">Crear nuevo Comentario</a>
+				
+			
+			<div style="text-align: center;">
+				<table class="table table-bordered" border="1">
+					<thead class="thead-light">
+						<tr>
+							<th># Ticket</th>
+							<th>Comentario</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="HistoricoTicket : ${listHistoricoTicket}">
+							<td th:text="${HistoricoTicket.idTicketFK}" >IDTICKET</td>
+							<td th:id="FKTEST" th:text="${HistoricoTicket.mensajeHistorico}">MENSAJEHISTORICO</td>							
+						</tr>
+					</tbody>
+				</table>
+				
+				
+			</div>
 		</form>
 	</div>
-
+	
 
 	<script>
-		function myFunction() {
-
-			var today = new Date();
-			var dd = today.getDate();
-
-			var mm = today.getMonth() + 1;
-			var yyyy = today.getFullYear();
-			if (dd < 10) {
-				dd = '0' + dd;
-			}
-
-			if (mm < 10) {
-				mm = '0' + mm;
-			}
-			today = dd + '-' + mm + '-' + yyyy;
-			
-			var id1 = Date();
-			var id2 = id1.replace(/ /g, "");
-			var id3 = id2.substr(1,20);
-
-			document.getElementById('fechaini').value = today;
-			document.getElementById('fechater').value = "No Aplica";
-			document.getElementById('FK').value = id3;
-			document.getElementById('FK2').value = id3;
-		}
+		function myFunction2() {
 		
-	</script>
+			 var x = $("#FKTEST").val();
+	         alert(x);
+	        }
 
+		</script>
 
 
 

@@ -30,7 +30,8 @@
     <form>
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuario/Rut">
       <input type="password" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
-      <input type="submit" class="fadeIn fourth" th:action="@{/home}" value="Ingresar">
+      <input type="submit" class="fadeIn fourth" th:action="@{home}" value="Ingresar">
+      <button th:action="@{home}" class="fadeIn fourth"  type="submit">Ingresar</button> 
     </form>
 
     <!-- Remind Passowrd -->

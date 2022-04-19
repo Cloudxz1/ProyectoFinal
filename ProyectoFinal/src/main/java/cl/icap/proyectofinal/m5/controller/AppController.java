@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import cl.icap.proyectofinal.m5.entity.Estado;
+import cl.icap.proyectofinal.m5.entity.HistoricoTicket;
 import cl.icap.proyectofinal.m5.entity.Rol;
 import cl.icap.proyectofinal.m5.entity.Ticket;
 import cl.icap.proyectofinal.m5.entity.Usuario;
 import cl.icap.proyectofinal.m5.service.EstadoService;
+import cl.icap.proyectofinal.m5.service.HistoricoTicketService;
 import cl.icap.proyectofinal.m5.service.RolService;
 import cl.icap.proyectofinal.m5.service.TicketService;
 import cl.icap.proyectofinal.m5.service.UsuarioService;
@@ -36,13 +38,18 @@ public class AppController {
 	
 	@Autowired
 	private TicketService ticketservice;
-
+	
+	@Autowired
+	private HistoricoTicketService historicoTicketservice;
 
 
 	@RequestMapping("/")
 	public String defectDetails0() {
 		return "index";
 	}
+	
+
+	
 
 	@RequestMapping("/newEstado")
 	public String showNewProductPage(Model model) {
@@ -64,13 +71,6 @@ public class AppController {
 	public String defectDetails() {
 		return "home";
 	}
-
-
-	@RequestMapping("/mistickets")
-	public String defectDetails1() {
-		return "mistickets";
-	}
-
 
 	@RequestMapping("/EstadosSistemaCRUD")
 	public String defectDetails4(Model model) {
@@ -172,21 +172,61 @@ public class AppController {
 	}
 	
 	@RequestMapping("/creaticket")
-	public String showNewProductPage111(Model model) {
+	public String showNewProductPage111(Model model10) {
+		List<Usuario> listUsuarios= usuariosservice.listAll();
+		model10.addAttribute("listUsuarios", listUsuarios);
+	
+		
 		Ticket ticket = new Ticket();
-		model.addAttribute("ticket", ticket);
+		model10.addAttribute("ticket", ticket);
+		
+		HistoricoTicket historicoTicket = new HistoricoTicket();
+		model10.addAttribute("historicoTicket", historicoTicket);
 
 		return "creaticket";
 	}
 	
-	@RequestMapping(value = "/saveTicket", method = RequestMethod.POST)
-	public String saveProduct1(@ModelAttribute("ticket") Ticket ticket) {
+	@RequestMapping(value = "/saveTicket", method = RequestMethod.GET)
+	public String saveProduct1(@ModelAttribute("ticket") Ticket ticket, @ModelAttribute("HistoricoTicket") HistoricoTicket HistoricoTicket) {
 		ticketservice.save(ticket);
-
+		historicoTicketservice.save(HistoricoTicket);
+	
 		return "redirect:/home";
 	}
 	
-
+	@RequestMapping("/mistickets")
+	public String defectDetails66(Model model99) {
+		List<Ticket> listTicket= ticketservice.listAll();
+		model99.addAttribute("listTicket", listTicket);
+		return "mistickets";
+	}
 	
+	@RequestMapping("/editTicket/{idTicket}")
+	public ModelAndView showEditProductPage111(@PathVariable(name = "idTicket") String idTicket, Model model100) {
+		
+		List<HistoricoTicket> listHistoricoTicket= historicoTicketservice.findByIdTicketFK(idTicket);
+		model100.addAttribute("listHistoricoTicket", listHistoricoTicket);
+		
+		ModelAndView mav = new ModelAndView("editTicket");
+		Ticket ticket = ticketservice.get(idTicket);
+		mav.addObject("ticket", ticket);
+		
+		return mav;
+	}
+	
+	@RequestMapping("/newHistorico")
+	public String showEditProductPage120(Model model113) {
+		
+		HistoricoTicket historicoTicket = new HistoricoTicket();
+		model113.addAttribute("historicoTicket", historicoTicket);
 
+		return "newHistorico";
+	}
+	
+	@RequestMapping(value = "/saveHistorico", method = RequestMethod.POST)
+	public String saveProduct121(@ModelAttribute("rol") HistoricoTicket historicoTicket) {
+		historicoTicketservice.save(historicoTicket);
+
+		return "redirect:/editTicket/{idTicket}";
+	}
 }

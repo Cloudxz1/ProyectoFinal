@@ -2,8 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8">
+       <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/bootstrap.css">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +17,7 @@
   <nav>
     <div class="navbar">
       <i class='bx bx-menu'></i>
-      <div class="logo"><a href="#">Mis Ticket - #usuario</a></div>
+      <div class="logo"><a href="#">Mis Ticket - [[${#httpServletRequest.remoteUser}]]</a></div>
       <div class="nav-links">
         <div class="sidebar-logo">
           <span class="logo-name">CodingLab</span>
@@ -49,6 +54,29 @@
       </div>
     </div>
   </nav>
-  <!--<script src="script.js"></script>-->
-</body>
+<br><br><br><br>
+<br><br>
+	<div style="text-align:center;">
+	<table class="table table-bordered" border="1">
+	      <thead class="thead-light">
+				<th># Identificador</th>
+				<th>Creador</th>
+				<th>Fecha Creacion</th>
+				<th>Titulo</th>
+				<th>Acciones</th>
+			</tr>
+		</thead> 
+		<tbody>
+			<tr th:each="ticket : ${listTicket}">
+				<td th:text="${ticket.idTicket}">idticket</td>
+				<td th:text="${ticket.idUsuario}">idusuario</td>
+				<td th:text="${ticket.fechaCreacion}">fechacreacion</td>
+				<td th:text="${ticket.tituloTicket}">tituloticket</td>
+				 <td>
+                	<a th:href="@{'/editTicket/' + ${ticket.idTicket}}">Resolver</a>
+                	&nbsp;&nbsp;&nbsp;
+                </td>
+			</tr>
+		</tbody>
+	</table></body>
 </html>
